@@ -111,6 +111,8 @@
 - [x] ACME auto SSL certificates (Let's Encrypt)
 - [x] Cloud host sync (one-click discover hosts from OCI/AWS/GCP/Azure/DO/SolusVM/VirtFusion and import to session list, real-time SSE progress)
 - [x] Cloud platform config online upload, editing & management (OCI/AWS/GCP/Azure/DO/SolusVM/VirtFusion, merge mode + inline edit/delete single Profile + secret masking + hot-reload on save)
+- [x] Web client upgrade (version check, upgrade, force upgrade, restart service, with a trigger cooldown against duplicate launches)
+- [x] Web client run log (line count selection, keyword filtering, auto-refresh, copy-all)
 - [x] Telegram verification code login + anti-brute-force
 - [x] Chinese/English interface switching
 - [x] Page state memory (auto-restore position after refresh, cloud management sub-page state sync)
@@ -130,7 +132,9 @@
 - [x] Instance list with boot volume info merged inline
 - [x] Force ARM boot (improve ARM creation success rate for trial accounts, supports Web + Telegram)
 - [x] Network management (change IP, attach IPv4/IPv6, reserved IP, delete IP)
-- [x] Volume management (resize, VPU performance, detach, delete, batch VPU)
+- [x] Volume management (resize, VPU performance, detach, attach, delete, batch VPU, with lifecycle and attachment badges shown for every volume)
+- [x] Boot volume reattachment (attach a detached boot volume back onto a stopped instance; instances with no attached volume jump straight to the unattached-volume panel)
+- [x] Instance creation result polling (the web UI checks task status after submitting and shows the final result)
 - [x] A1 config audit / downscale (parallel scan of each account's A1.Flex usage vs the always-free cap; account-level / batch / per-instance preemptive downscale, downscale-only, never auto-deletes instances)
 - [x] User management (create, delete, reset password, update email, clear MFA, rename tenant, view identity domain password policy)
 - [x] Statistics overview (cost, traffic, subscription info, quota)
@@ -147,6 +151,8 @@
 - [x] EC2 instance management (list, start, stop, reboot, terminate)
 - [x] Create EC2 instances (AMI selection, instance type, key management, async creation)
 - [x] Lightsail instance management (list, start, stop, reboot, delete, current-month traffic monitoring)
+- [x] Lightsail instance creation (region, availability zone, blueprint, bundle, key pair, name, count; bundles filtered by blueprint platform, local public keys importable)
+- [x] EC2 firewall / security group management (attach, detach, create, delete groups; add and remove inbound and outbound rules; one-click common presets)
 - [x] Lightsail network / IP management (static IP allocate/attach/detach/release, change static IP, reboot to change dynamic IP, firewall ports)
 - [x] Network management (VPC, security groups)
 - [x] Cost statistics (Cost Explorer integration)

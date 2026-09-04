@@ -11,9 +11,11 @@ Task-oriented walkthroughs. The exhaustive feature list lives in [Implemented Fe
 - [A1 free tier audit](#a1-free-tier-audit)
 - [Domain and certificate expiry monitoring](#domain-and-certificate-expiry-monitoring)
 - [Give each account its own outbound IP](#give-each-account-its-own-outbound-ip)
+- [Lost boot volume or terminated instance](#lost-boot-volume-or-terminated-instance)
 - [Rescue an instance you cannot SSH into](#rescue-an-instance-you-cannot-ssh-into)
 - [Run one command across many hosts](#run-one-command-across-many-hosts)
 - [Import existing cloud instances as sessions](#import-existing-cloud-instances-as-sessions)
+- [Upgrade the client and read its logs](#upgrade-the-client-and-read-its-logs)
 
 ---
 
@@ -145,6 +147,23 @@ Accounts with a proxy configured use it for every request; there is no silent fa
 
 ---
 
+## Lost boot volume or terminated instance
+
+Boot volumes and instances are separate resources. As long as the volume survives, so does your data.
+
+Cloud Management → Volume Management now lists every boot volume without filtering by state, each with a lifecycle badge and an attachment badge. Detached volumes are collected in the "Unattached Boot Volumes" panel — and when an instance has no volume attached, clicking "Boot Volume" expands and scrolls straight to it.
+
+Two paths:
+
+| Situation | What to do |
+|------|------|
+| The instance exists, the volume was detached | Click "Attach" in the unattached panel and pick the target instance. It has to be stopped first |
+| The instance was terminated, the volume was preserved | Launch a new instance from that volume — see [Oracle Instance Launch Guide](./boot-oracle.md#booting-from-an-existing-volume) |
+
+Detaching has the same requirement: the instance must be stopped, and trying it on a running instance is refused. While a volume is mid-transition (attaching or detaching), wait for it to settle before refreshing.
+
+---
+
 ## Rescue an instance you cannot SSH into
 
 SSH refuses, you firewalled yourself out, or the system will not boot — use the serial console.
@@ -174,3 +193,30 @@ No need to type IPs one by one. Host panel → Cloud Host Sync, covering OCI, AW
 What syncs is the connection info; usernames and keys still need configuring once. Store the key under SSH Key Management and every session can pick it.
 
 Each cloud's instance cards also carry an "SSH" button that jumps straight into a terminal — handy for one-time connections.
+
+---
+
+## Upgrade the client and read its logs
+
+This used to mean SSH-ing into the client server, or using the bot's "32. Upgrade Client" and "34. Latest Logs". Both are now in the browser too, under the settings dropdown, and neither requires Lightning.
+
+**Client upgrade**
+
+The page shows the installed version and the latest one. If the remote cannot be reached the status reads "cannot check" and the page still works.
+
+- **Upgrade Now** — download the latest version and restart the client
+- **Force Upgrade** — reinstall over the top without comparing versions. Use it when the version check itself is what is failing, otherwise you just wait on a lookup that will not complete
+- **Restart Service** — restart the process, leave the version alone
+
+Upgrade and restart share a 5-minute cooldown. Pressing either again inside that window tells you to wait, which is what keeps both ends from launching several installers at once. Web terminals and SSH sessions drop during an upgrade and usually come back within 1-3 minutes.
+
+**Client logs**
+
+Read `log_r_client.log` directly in the browser:
+
+- 100 / 300 / 1000 lines
+- Keyword filter
+- 5-second auto-refresh, which stops itself after repeated read failures
+- Copy the whole thing in one click
+
+The header reports total lines, file size, and last-modified time. Very large files are read back over the last 2 MB only, and the panel says so.

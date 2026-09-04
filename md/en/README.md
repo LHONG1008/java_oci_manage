@@ -110,6 +110,7 @@ Details → [Web SSH Terminal Guide](./webssh.md)
 Manage multi-cloud resources directly from your browser — fully aligned with the Telegram bot's capabilities.
 
 - **Instance Management** — Create instance, quick boot, start, stop, reboot, terminate, reset OS, scale up/down
+- **Boot Volume Management** — Resize, tune performance, detach, and reattach to a stopped instance
 - **Quick Config Launch** — One-click AMD Micro / ARM A1 presets, or boot straight from an existing boot volume
 - **A1 Config Audit** — Scan OCI ARM always-free quota + preemptive downscale (account-level / batch / per-instance, never auto-deletes instances)
 - **Serial Console** — OCI instance serial console connection with Netboot.xyz rescue boot automation
@@ -121,9 +122,10 @@ Manage multi-cloud resources directly from your browser — fully aligned with t
 - **Cloud Monitoring** — Per-account traffic thresholds with automatic shutdown, plus stop notifications and auto-restart
 - **Domain Monitoring** — Daily domain and SSL certificate expiry checks with tiered Telegram alerts, one-click Cloudflare import
 - **Account Isolation** — Per-profile API outbound proxy, and one-click profile copy to a new region
+- **Client Maintenance** — Check the version, upgrade, and restart the client from the browser, with live access to its run log
 - **Object Storage** — OCI Object Storage bucket and file management
 - **Email Delivery** — One-click email domain setup (DKIM/DNS/SMTP fully automated), test send
-- **AWS Management** — EC2 instance create/manage/delete, Lightsail instance list/power/delete/traffic/network-IP management, network management, cost statistics
+- **AWS Management** — EC2 instance create/manage/delete plus firewall and security group management, Lightsail instance create/list/power/delete/traffic/network-IP management, network management, cost statistics
 - **GCP Management** — Compute Engine instance create/manage/delete, change IP, overview stats, traffic query
 - **DigitalOcean Management** — Droplet create/manage, reserved IP, bandwidth monitoring, billing overview
 - **Azure Management** — VM create/delete/restart, change IP, resource usage

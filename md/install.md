@@ -242,6 +242,8 @@ model=
 | `bash sh_client_bot.sh upgrade` | 升级到最新版本 |
 | `bash sh_client_bot.sh uninstall` | 卸载 |
 
+升级、重启和查看日志也可以在 Web 界面完成，见 [Web 云管理面板指南 — 客户端维护](./cloud.md#客户端维护)。
+
 ---
 
 ## 5. 访问 Web 界面
@@ -270,3 +272,5 @@ https://你的IP:9527
 | macOS ARM64（Apple Silicon） | `gz_client_bot_mac_aarch.tar.gz` |
 
 > 启动脚本会自动检测架构并下载对应版本，无需手动选择。
+
+安装脚本兼容 BusyBox 环境，可以直接装在 OpenWrt 路由器上。

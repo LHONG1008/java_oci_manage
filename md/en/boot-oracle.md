@@ -40,6 +40,8 @@ If your tenancy has no such shape, the button says so rather than failing silent
 
 Check the count and the key, hit "Start Creating", review shape / OS / script in the confirmation dialog, then "Confirm".
 
+After submitting, the page keeps polling task status and shows the final outcome, so you are not stuck watching Telegram. If polling times out, the result still arrives over Telegram.
+
 ### Field by field
 
 | Field | Notes |
@@ -62,6 +64,8 @@ Check the count and the key, hit "Start Creating", review shape / OS / script in
 For instances that were suspended, or terminated with the boot volume preserved: switch to the "Boot Volume" tab and pick a detached volume.
 
 Two constraints. One instance at a time, and it can only launch in the availability domain that volume lives in — crossing ADs is rejected by Oracle, and the task terminates immediately with a notification.
+
+If the instance still exists and only lost its volume, there is no need to launch anything — attach the volume back from Volume Management → Unattached Boot Volumes, provided the target instance is stopped.
 
 ### Saved launch configs
 

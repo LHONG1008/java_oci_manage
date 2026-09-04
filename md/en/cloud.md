@@ -47,6 +47,7 @@ Switch between Profiles to view different account information.
 | Create from Boot Volume | Boot an existing detached boot volume with its system and data intact; one instance at a time, and only in the volume's availability domain |
 | Force ARM Boot | Improve ARM instance creation success rate for trial accounts (briefly uses paid features, use at your own risk) |
 | Quick Boot | Quickly create an instance from saved configurations |
+| Result Polling | After submitting, the page keeps checking task status and shows the final result rather than leaving you to wait on Telegram. If polling times out the result still arrives over Telegram |
 | Start / Stop / Reboot | Basic instance operations |
 | Terminate | Delete instance (optionally preserve boot volume) |
 | Reset Image | Reinstall to initial OS image |
@@ -72,12 +73,15 @@ Switch between Profiles to view different account information.
 
 | Action | Description |
 |--------|-------------|
-| View Volumes | Display all block storage volumes |
+| View Volumes | Display all block storage volumes with lifecycle and attachment badges (attached / detached / attaching / detaching). Nothing is filtered out by state |
 | Resize | Increase volume size (cannot shrink) |
 | Adjust VPU | Modify performance units for IO boost |
 | Batch VPU | Max out VPU for all volumes at once |
-| Detach | Detach volume from instance |
+| Detach | Detach a volume from its instance. The instance must be stopped first |
+| Attach Boot Volume | Attach a detached boot volume back onto an instance. The target instance must be stopped |
 | Delete | Permanently delete block storage volume |
+
+Detached boot volumes are collected in the "Unattached Boot Volumes" panel. When an instance has no boot volume attached, clicking "Boot Volume" expands and scrolls to that panel instead of reporting that there is nothing to show.
 
 ### A1 Config Audit / Downscale
 
@@ -174,6 +178,7 @@ Connect to an OCI instance's serial console via Console Connection — useful fo
 | Action | Description |
 |--------|-------------|
 | View Instance List | Show Lightsail instances with public IP, bundle, blueprint, spec, region, and creation time |
+| Create Instance | Switch the AWS creation page to the Lightsail product line, then pick region, availability zone, blueprint, bundle, key pair, name, and count. Bundles are filtered by blueprint platform and minimum compute, and locally stored public keys can be imported directly. Creation is asynchronous; on completion it lists the instances and public IPs and sends a Telegram notification |
 | Start / Stop / Reboot | Basic power operations |
 | Delete Instance | Delete a Lightsail instance (dangerous action, requires confirmation) |
 | Traffic This Month | View inbound / outbound / total traffic and the bundle allowance; sourced from monitoring metrics, not billing usage |
@@ -192,7 +197,22 @@ Connect to an OCI instance's serial console via Console Connection — useful fo
 | Action | Description |
 |--------|-------------|
 | VPC Management | View and manage VPC resources |
-| Security Groups | Manage security group configurations |
+
+### EC2 Firewall / Security Groups
+
+The "Firewall" button on an EC2 instance card opens one dialog covering both groups and rules.
+
+| Action | Description |
+|--------|-------------|
+| View Groups | Split into groups attached to this instance and other groups in the same VPC |
+| Attach / Detach | Add or remove a security group. An instance must keep at least one |
+| Create and Attach | Create a new group by name and description and attach it immediately |
+| Delete Group | Only possible while no resource references the group |
+| Inbound / Outbound Rules | Add and remove rules across tcp / udp / icmp / icmpv6 / all protocols, port ranges, and IPv4 and IPv6 CIDRs |
+| Rule Presets | SSH 22, HTTP 80, HTTPS 443, Ping, allow-all. One click fills the form; you still confirm before adding |
+| Referencing Rules | Rules that reference another security group or a prefix list are shown read-only |
+
+When a direction has no rules the panel spells out the consequence: no inbound rules means every inbound connection including SSH is refused; no outbound rules means the instance cannot reach the internet at all, apt and yum included.
 
 ### Statistics & Monitoring
 
@@ -362,6 +382,25 @@ Permissions: adding, importing, and enabling reminders require Lightning; disabl
 | Daily Report | Scheduled push of cost and traffic reports |
 | Health Check | Batch check all Profile account status |
 | Boot Notification Account Type | Boot notifications mark the account as upgraded / regular (determined by OCI subscription paymentModel; left unmarked if uncertain) |
+
+### Client Maintenance
+
+"Client Upgrade" and "Client Logs" in the settings dropdown, matching the bot's "32. Upgrade Client" and "34. Latest Logs". Neither requires Lightning.
+
+**Client Upgrade**
+
+| Action | Description |
+|--------|-------------|
+| Version Check | Shows the installed and latest versions. If the remote is unreachable it degrades to "cannot check" without blocking the page |
+| Upgrade Now | Download the latest version and restart the client |
+| Force Upgrade | Skip the version comparison and reinstall over the top — for when the version check itself is what is broken |
+| Restart Service | Restart the client process without changing versions |
+
+Upgrade and restart share a 5-minute cooldown; pressing either again inside that window tells you to wait. That is what stops two ends double-clicking into several installer processes trampling each other. Web terminals and SSH sessions drop during an upgrade and typically return within 1-3 minutes.
+
+**Client Logs**
+
+Read `log_r_client.log` straight from the browser: 100 / 300 / 1000 lines, keyword filtering, 5-second auto-refresh, and copy-all. The panel reports total lines, file size, and last-modified time; very large files are read back only over the last 2 MB.
 
 ### ACME Certificates
 

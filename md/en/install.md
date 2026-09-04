@@ -12,6 +12,8 @@ wget -O sh_client_bot.sh https://github.com/semicons/java_oci_manage/releases/la
 
 > Recommended: create a directory first — `mkdir rbot && cd rbot`
 
+The install script works under BusyBox, so it runs on OpenWrt routers as well.
+
 ---
 
 ## 2. Activate the Client
@@ -220,6 +222,8 @@ model=
 | `bash sh_client_bot.sh log` | View logs (Ctrl+C to exit) |
 | `pgrep -f r_client \| xargs -r kill -9` | Stop |
 | `bash sh_client_bot.sh uninstall` | Uninstall |
+
+Upgrading, restarting, and reading logs can also be done from the web UI — see [Cloud Management Panel Guide — Client Maintenance](./cloud.md#client-maintenance).
 
 ---
 
